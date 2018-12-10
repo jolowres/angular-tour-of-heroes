@@ -12,7 +12,6 @@ import { MessageService } from '../services/message.service'
 })
 export class HeroesComponent implements OnInit {
 
-  selectedHero: Hero;
   heroes: Hero[];
 
   onSelect(hero: Hero): void {
