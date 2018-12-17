@@ -23,7 +23,7 @@ export class HeroService {
   private handleError<T>(operation = 'operation', result?: T) {
     return(error: any): Observable<T> => {
       console.error(error)
-      this.log('operation failed ' + error.message)
+      this.log(`${operation} failed ` + error.message)
       return of(result as T)
     }
   }
@@ -51,6 +51,23 @@ export class HeroService {
     .pipe(
       tap(_ => this.log(`saved hero --> ${hero.id}`)),
       catchError(this.handleError<any>('update hero'))
+    )
+  }
+
+  addHero(hero: Hero): Observable<any> {
+    return this.http.post(this.herosApi, hero, httpOptions)
+    .pipe(
+      tap((hero: Hero) => this.log(`added hero ----> ${hero.id}`)),
+      catchError(this.handleError<any>('adding hero'))
+    )
+  }
+
+  deleteHero(hero : Hero) {
+    const url = `${this.herosApi}/${hero.id}`
+    return this.http.delete<Hero>(url, httpOptions)
+    .pipe(
+      tap(_ => this.log('deleted hero')),
+      catchError(this.handleError<any>('deleting hero'))
     )
   }
 
