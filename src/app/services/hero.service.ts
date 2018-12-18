@@ -58,7 +58,7 @@ export class HeroService {
     if(!term.trim()) {
       return of([])
     }
-    return this.http.get<Hero[]>(`${this.herosApi}/name=${term}`)
+    return this.http.get<Hero[]>(`${this.herosApi}/?name=${term}`)
     .pipe(
       tap((heroes: Hero[]) => this.log(`found ${heroes.length} heroes for ${term}`)),
       catchError(this.handleError<any>('searching hero'))
